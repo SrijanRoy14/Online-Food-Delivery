@@ -1,0 +1,54 @@
+{% extends "order_reg/base.html" %}
+
+
+{% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Name</td>
+            <td>Email</td>
+            
+            <td>City</td>
+            <td>State</td>
+            <td>Zip_code</td>
+            <td>Items</td>
+            <td>No.</td>
+            <td>Price</td>
+            <td>Created_on</td>
+
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in order_list %}
+            <tr>
+                <td>{{order.name}}</td>
+                <td>{{order.email}}</td>
+                
+                <td>{{order.city}}</td>
+                <td>{{order.state}}</td>
+                <td>{{order.zip_code}}</td>
+                
+                <td>{% for o in order.items.all %}{{o}} <br/>{% endfor %}</td>
+                <td>{% for o in order.get_num %}{{o}} <br/>{% endfor %}</td>
+                
+                <td>{{order.price}}</td>
+                <td>{{order.created_on}}</td>
+                
+                <td>
+                    <a href="{% url 'order_update' order.id %}" class="btn text-secondary px-0">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'order_delete' order.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

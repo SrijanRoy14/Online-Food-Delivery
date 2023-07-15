@@ -1,0 +1,46 @@
+{% extends "menu_reg/base.html" %}
+
+
+{% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Category</td>
+            <td>Price</td>
+            <td>Image</td>
+            <td>
+                <a href="{% url 'menu_insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for menu in menu_list %}
+            <tr>
+                <td>{{menu.name}}</td>
+                <td>{{menu.description}}</td>
+                <td>{% for o in menu.category.all %}{{o}} <br/>{% endfor %}</td>
+                <td>{{menu.price}}</td>
+                {%if menu.image %}
+                <td><img class='rounded'src="{{menu.image.url}}" width='150px' height="100px"></td>
+                {% endif %}
+                <td>
+                    <a href="{% url 'menu_update' menu.id %}" class="btn text-secondary px-0">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'menu_delete' menu.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

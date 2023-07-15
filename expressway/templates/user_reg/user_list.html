@@ -1,0 +1,39 @@
+{% extends "user_reg/base.html" %}
+
+
+{% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Username</td>
+            <td>is_active</td>
+            <td>Date_joined</td>
+            <td>Last_login</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in user_list %}
+            <tr>
+                <td>{{user.first_name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.username}}</td>
+
+                <td>{{user.is_active}}</td>
+                <td>{{user.date_joined}}</td>
+                <td>{{user.last_login}}</td>
+                <td>
+                    <form action="{% url 'user_delete' user.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

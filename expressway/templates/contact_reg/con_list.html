@@ -1,0 +1,38 @@
+{% extends "contact_reg/base.html" %}
+
+
+{% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Subject</td>
+            <td>Message</td>
+            <td>Added_on</td>
+            <td>is_approved</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for con in con_list %}
+            <tr>
+                <td>{{con.name}}</td>
+                <td>{{con.email}}</td>
+                <td>{{con.subject}}</td>
+                <td>{{con.message}}</td>
+                <td>{{con.added_on}}</td>
+                <td>{{con.is_approved}}</td>
+                <td>
+                    <form action="{% url 'con_delete' con.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

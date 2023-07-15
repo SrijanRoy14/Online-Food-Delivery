@@ -1,0 +1,43 @@
+{% extends "admin_reg/base.html" %}
+
+
+{% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Username</td>
+            <td>Password</td>
+            <td>Email</td>
+            <td>Status</td>
+            
+            <td>
+                <a href="{% url 'adm_insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for adm in adm_list %}
+            <tr>
+                <td>{{adm.username}}</td>
+                <td>{{adm.password}}</td>
+                <td>{{adm.email}}</td>
+                <td>{{adm.is_admin}}</td>
+                <td>
+                    <a href="{% url 'adm_update' adm.id %}" class="btn text-secondary px-0">
+                        <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'adm_delete' adm.id %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
